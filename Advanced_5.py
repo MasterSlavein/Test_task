@@ -23,19 +23,9 @@ class Matrix:
     def transpose(self):
         trans_matrix = list(zip(*self.matrix))
         self.matrix = trans_matrix
-        return Matrix(trans_matrix)
+        return self
 
     @classmethod
     def create_transposed(cls, list_of_lists):
         instance = cls(list_of_lists)
-        instance.transpose()
-        return instance
-
-
-a = Matrix([[1, 2, 3], [4, 5, 6]])
-a.size()
-trans = a.transpose()
-b = Matrix.create_transposed(a.matrix)
-print(b)
-print(b.size())
-print(trans.matrix, trans.size())
+        return instance.transpose()
