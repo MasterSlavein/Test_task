@@ -57,12 +57,7 @@ def main():
     power_strategy = BasicCalculator(PowerToStrategy())
     lcm_strategy = BasicCalculator(LeastCommonMultiple())
 
-    # * no_strategy executes without a predefined strategy object.
-    # * addition_strategy.execute() executes. Because the Addition strategy
-    # object was passed to it, it knows how to add. Because that object
-    # requires two parameters (operands) two must be passed.
-    # * Ibid for the subtraction_strategy, except the operands are subtracted.
-
+    # Test calculations choosing different strategies 
     # no_strategy.execute(4, 6)
     addition_strategy.execute(4, 6)
     subtraction_strategy.execute(4, 6)
