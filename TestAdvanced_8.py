@@ -15,7 +15,7 @@ class TestMatrix(unittest.TestCase):
 
     # Each test method starts with the keyword test_
     def test_add(self):
-        matrix_b = [[1, 2, 3], [4, 5, 6]]
+        matrix_b = Matrix([[1, 2, 3], [4, 5, 6]])
         matrix_c = [[2, 4, 6], [8, 10, 12]]
         self.assertEqual(self.matrix.__add__(matrix_b), matrix_c)
 
