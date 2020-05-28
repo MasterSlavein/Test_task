@@ -22,7 +22,7 @@ class Matrix:
     def transpose(self):
         trans_matrix = list(zip(*self.matrix))
         self.matrix = trans_matrix
-        return self
+        return trans_matrix
 
     @classmethod
     def create_transposed(cls, list_of_lists):

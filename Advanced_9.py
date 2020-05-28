@@ -1,46 +1,54 @@
-def true_if_even(array):
-    for index, elem in enumerate(array):
-        if elem % 2 == 0:
-            return index
-        else:
-            return -1
+# Сделать скрипт, который будет делать GET запросы.
+# Для каждого запроса должен быть вывод по примеру: "Resource 'google.com.ua', request took 0.23 sec,
+# response status - 200." В реализации нет ограничений - можно использовать процессы, потоки, асинхронность.
+# Любые вспомагательные механизмы типа Lock, Semaphore, пулы для тредов и потоков.
+import sys
+import asyncio
+import aiohttp
+import datetime
+import ssl
+
+url_list = ["http://docs.python-requests.org/",
+            "https://httpbin.org/get",
+            "https://httpbin.org/",
+            "https://api.github.com/",
+            "https://example.com/",
+            "https://www.python.org/",
+            "https://www.google.com.ua/",
+            "https://regex101.com/",
+            "https://docs.python.org/3/this-url-will-404.html",
+            "https://www.nytimes.com/guides/",
+            "https://www.mediamatters.org/",
+            "https://1.1.1.1/",
+            "https://www.politico.com/tipsheets/morning-money",
+            "https://www.bloomberg.com/markets/economics",
+            "https://www.ietf.org/rfc/rfc2616.txt"
+            ]
 
 
-def never_true():
-    return -1
+async def do_request(list_of_urls: list):
+     async with aiohttp.ClientSession() as session:
+          for url in list_of_urls:
+               start_time = datetime.datetime.now().microsecond
+               async with session.get(url, ssl=ssl.SSLContext()) as resp:
+
+                    print(f'Resource {url}')
+                    print(f'Response status={resp.status}')
+                    end_time = datetime.datetime.now().microsecond
+                    print(f'Response time {end_time - start_time}')
 
 
-def true_if_value_equals_index(array):
-    for index, value in enumerate(array):
-        if int(index) == value:
-            return int(index)
-        else:
-            return -1
 
 
-def true_if_length_equals_index(array):
-    for index, value in enumerate(array):
-        if len(value) == index:
-            return index
-        else:
-            return -1
 
+async def main():
+    print(datetime.datetime.now().strftime("%A, %B %d, %I:%M %p"))
+    print('---------------------------')
+    loop = asyncio.get_running_loop()
+    async with aiohttp.ClientSession(loop=loop) as client:
+        await asyncio.gather(
+               do_request(url_list)
+            )
+        print(f'Loop time={loop.time()}')
 
-def find_in_array(seq, predicate):
-    if predicate == true_if_even:
-        return true_if_even(seq)
-    elif predicate == never_true:
-        return never_true()
-    elif predicate == true_if_value_equals_index:
-        return true_if_value_equals_index(seq)
-    elif predicate == true_if_length_equals_index:
-        return true_if_length_equals_index(seq)
-
-
-print(find_in_array([], true_if_even))
-print(find_in_array([1, 3, 5, 6, 7], true_if_even))
-print(find_in_array([2, 4, 6, 8], true_if_even))
-print(find_in_array([2, 4, 6, 8], never_true))
-print(find_in_array([13, 5, 3, 1, 4, 5], true_if_value_equals_index))
-print(find_in_array(["one", "two", "three", "four", "five", "six"], true_if_length_equals_index))
-print(find_in_array(["bc", "af", "d", "e"], true_if_length_equals_index))
+asyncio.run(main())

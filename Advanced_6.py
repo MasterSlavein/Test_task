@@ -52,3 +52,16 @@ class Matrix:
 
     def __str__(self):
         return '\n'.join([''.join(['%d\t' % column for column in row]) for row in self.matrix])
+
+
+a = Matrix([[1, 2, 3], [4, 5, 6]])
+b = Matrix([[1, 2, 3], [4, 5, 6]])
+print(a + b, a * 2)
+print(a.__add__(b))
+print(a.__mul__(2))
+print(a.__str__())
+
+
+
+
+
